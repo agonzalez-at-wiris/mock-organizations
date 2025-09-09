@@ -8,26 +8,22 @@
     :root{
       --teal:#0f7c82;
       --teal-700:#0b5c60;
-      --mint:#dff1ee;
-      --bg:#e8f6f3;
+      --bg:#e7f4f1;
       --card:#ffffff;
       --ink:#2e3a3b;
       --muted:#6e7f80;
       --ok:#36b37e;
-      --danger:#e35d6a;
+      --warn:#efb036;
       --shadow:0 8px 20px rgba(0,0,0,.08);
       --radius:16px;
     }
     *{box-sizing:border-box}
-    body{ margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg) }
-    header{
-      height:64px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:space-between;
-      padding:0 20px; position:sticky; top:0; z-index:3; box-shadow:var(--shadow);
-    }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg) }
+    header{ height:64px; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 20px; position:sticky; top:0; z-index:3; box-shadow:var(--shadow) }
     .brand{ display:flex; align-items:center; gap:12px; font-weight:800 }
     .logo{ width:36px; height:36px; border-radius:50%; background:linear-gradient(145deg,#fff,#e9fffa); color:var(--teal); display:grid; place-items:center }
     .btn{ border:none; padding:10px 14px; border-radius:999px; background:#fff; color:var(--teal-700); cursor:pointer; font-weight:600; box-shadow:var(--shadow) }
-    .btn.ghost{ background:transparent; color:#fff; border:1px solid #ffffff55 }
+    .btn.small{ padding:8px 12px; font-weight:700 }
     .layout{ display:grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 64px) }
     nav{ background: linear-gradient(180deg,#0f7c82,#0a686d); color:#daf5f4; padding:20px 12px }
     .nav-item{ display:flex; align-items:center; gap:12px; padding:12px 14px; margin:8px 4px; background:#ffffff12; border-radius:12px; cursor:pointer }
@@ -50,7 +46,7 @@
     th{ color:var(--muted); background:#fafafa }
     .badge{ display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:700 }
     .ok{ background:#e6f7ef; color:#177a52 }
-    .warn{ background:#fff4e2; color:#9c6a10 }
+    .warn-b{ background:#fff4e2; color:#9c6a10 }
     .danger{ background:#fee8ea; color:#a73e4b }
     .muted-badge{ background:#eef6f6; color:#4d6c6d }
     .toolbar{ display:flex; gap:10px; flex-wrap:wrap; margin: 6px 0 16px }
@@ -58,14 +54,20 @@
     .tabs button{ border:none; padding:8px 12px; border-radius:999px; background:#f0f7f7; color:#275a5b; cursor:pointer; font-weight:700 }
     .tabs button.active{ background:#0f7c82; color:#fff }
     .chart{ width:100%; height:180px; background:linear-gradient(180deg,#f7fbfb,#fff); border-radius:12px; border:1px solid #eef3f4; display:grid; place-items:center }
-    .footer-note{ color:var(--muted); font-size:12px; text-align:right; margin-top:8px }
+    .searchbar{ display:flex; gap:12px; align-items:center }
+    .searchbar input{ flex:1; border-radius:10px; padding:12px 14px; border:1px solid #cfe4e1; font-size:16px; background:#fff }
+    .pill{ border:1px solid #cfe4e1; padding:6px 10px; border-radius:999px; background:#fff; font-weight:700; cursor:pointer }
+    .pill.active{ background:#0f7c82; color:#fff; border-color:#0f7c82 }
+    .list-card{ background:#fff; border-radius:14px; box-shadow:var(--shadow); padding:16px; display:flex; justify-content:space-between; align-items:center }
+    .list-card + .list-card{ margin-top:12px }
+    .row-muted{ font-size:12px; color:var(--muted) }
   </style>
 </head>
 <body>
   <header>
     <div class="brand"><div class="logo">LL</div><div>LearningLemur</div></div>
     <div class="actions">
-      <button class="btn ghost" onclick="alert('This is a non-functional prototype.')">UPGRADE YOUR PLAN</button>
+      <button class="btn" onclick="alert('Upgrade…')">UPGRADE YOUR PLAN</button>
       <button class="btn">AG</button>
     </div>
   </header>
@@ -78,39 +80,53 @@
     </nav>
 
     <main>
-      <div class="crumbs" id="crumbs">My Quizzes</div>
-      <h1 id="title">My Quizzes</h1>
+      <div class="crumbs" id="crumbs">Admin</div>
+      <h1 id="title">Admin</h1>
 
-      <!-- My Quizzes placeholder -->
-      <section id="section-quizzes">
+      <!-- My Quizzes -->
+      <section id="section-quizzes" style="display:none">
         <div class="card">
-          <table>
-            <thead><tr><th>Quiz</th><th>Questions</th><th>Points</th><th>Last edit</th><th></th></tr></thead>
-            <tbody>
-              <tr><td>N-RN.2 — Rewrite expressions involving radicals…</td><td>12</td><td>12</td><td>Sep 8, 2025</td><td><button class="btn">Preview</button></td></tr>
-              <tr><td>Test</td><td>10</td><td>10</td><td>Sep 4, 2025</td><td><button class="btn">Preview</button></td></tr>
-            </tbody>
-          </table>
+          <div class="searchbar" style="margin-bottom:12px">
+            <input placeholder="Search my quizzes"/>
+            <button class="btn small">Filters</button>
+            <button class="btn small">+ Create New Quiz</button>
+          </div>
+          <div class="list-card">
+            <div>
+              <div style="font-weight:800">N-RN.2 — Rewrite expressions involving radicals…</div>
+              <div class="row-muted">12 questions · 12 points · Last edit: Sep 8, 2025</div>
+            </div>
+            <div><button class="btn small">Preview</button> <button class="btn small">Share</button></div>
+          </div>
+          <div class="list-card">
+            <div>
+              <div style="font-weight:800">Test</div>
+              <div class="row-muted">10 questions · 10 points · Last edit: Sep 4, 2025</div>
+            </div>
+            <div><button class="btn small">Preview</button> <button class="btn small">Share</button></div>
+          </div>
         </div>
       </section>
 
-      <!-- Content Bank placeholder -->
+      <!-- Content Bank -->
       <section id="section-bank" style="display:none">
-        <div class="card">
-          <h3>Explore shared content</h3>
-          <p class="muted">Search and import quizzes created by the community.</p>
-          <table>
-            <thead><tr><th>Title</th><th>Author</th><th>Grade</th><th>Actions</th></tr></thead>
-            <tbody>
-              <tr><td>Quadratic equations practice</td><td>Anna T.</td><td>9</td><td><button class="btn">Import</button></td></tr>
-              <tr><td>Radicals drill</td><td>Mike D.</td><td>10</td><td><button class="btn">Import</button></td></tr>
-            </tbody>
-          </table>
+        <div class="searchbar" style="margin-bottom:12px">
+          <input placeholder="Search content"/>
+          <div class="pill-group">
+            <button class="pill active" data-bank="public" onclick="selectBank(event)">Public</button>
+            <button class="pill" data-bank="school" onclick="selectBank(event)">School</button>
+          </div>
+          <button class="btn small">Filters</button>
         </div>
+
+        <div id="bank-list">
+          <!-- Populated by JS -->
+        </div>
+        <div class="row-muted" style="text-align:right; margin-top:8px">1–6 of 6</div>
       </section>
 
       <!-- Admin -->
-      <section id="section-admin" style="display:none">
+      <section id="section-admin">
         <div class="crumbs muted">Organizations / Wiris School</div>
         <div class="tabs">
           <button class="active" data-tab="dashboard" onclick="switchAdminTab(event)">Dashboard</button>
@@ -123,9 +139,9 @@
         <!-- Dashboard -->
         <div id="admin-dashboard">
           <div class="toolbar">
-            <button class="btn" onclick="alert('Invite flow…')">+ Invite members</button>
-            <button class="btn" onclick="alert('Create department…')">+ New department</button>
-            <button class="btn" onclick="alert('Bulk actions…')">Bulk actions</button>
+            <button class="btn small" onclick="alert('Invite flow…')">+ Invite members</button>
+            <button class="btn small" onclick="alert('Create department…')">+ New department</button>
+            <button class="btn small" onclick="alert('Bulk actions…')">Bulk actions</button>
           </div>
 
           <div class="grid cols-3">
@@ -149,7 +165,6 @@
             <div class="card">
               <h3>Seats & usage</h3>
               <div class="chart" id="chart-usage"></div>
-              <div class="footer-note">Mock data for visualization only.</div>
             </div>
           </div>
         </div>
@@ -179,36 +194,23 @@
                 </tbody>
               </table>
               <div class="toolbar" style="margin-top:12px">
-                <button class="btn" onclick="alert('Renew wizard…')">Renew</button>
-                <button class="btn" onclick="alert('Adjust seats…')">Adjust seats</button>
-                <button class="btn" onclick="alert('Export…')">Export</button>
+                <button class="btn small" onclick="alert('Renew wizard…')">Renew</button>
+                <button class="btn small" onclick="alert('Adjust seats…')">Adjust seats</button>
+                <button class="btn small" onclick="alert('Export…')">Export</button>
               </div>
             </div>
             <div class="card">
               <h3>Service control</h3>
-              <p class="muted">Service enable/disable is **managed by Wiris**. Admins see read-only status.</p>
+              <p class="muted">Service enable/disable is managed by Wiris. Admins see read-only status.</p>
               <table>
                 <thead><tr><th>Scope</th><th>Value</th><th>Access</th></tr></thead>
                 <tbody>
                   <tr><td>Org</td><td>Wiris School</td><td><span class="badge ok">Enabled</span></td></tr>
                   <tr><td>Domain</td><td>wiris.com</td><td><span class="badge ok">Enabled</span></td></tr>
-                  <tr><td>Domain</td><td>students.wiris.com</td><td><span class="badge warn">Restricted</span></td></tr>
+                  <tr><td>Domain</td><td>students.wiris.com</td><td><span class="badge warn-b">Restricted</span></td></tr>
                 </tbody>
               </table>
             </div>
-          </div>
-
-          <div class="card" style="margin-top:16px">
-            <h3>Entitled features (read-only)</h3>
-            <table>
-              <thead><tr><th>Feature</th><th>Description</th><th>State</th><th>Notes</th></tr></thead>
-              <tbody>
-                <tr><td>Content Bank</td><td>Discover & reuse shared quizzes</td><td><span class="badge ok">Included</span></td><td></td></tr>
-                <tr><td>AI Question Creation</td><td>Generate questions with AI</td><td><span class="badge ok">Included</span></td><td>Org-wide usage at 80%</td></tr>
-                <tr><td>Advanced Analytics</td><td>Org dashboards & exports</td><td><span class="badge warn">Add-on</span></td><td>Trial ends in 14 days</td></tr>
-                <tr><td>LTI Integration</td><td>Canvas & Google Classroom LTI</td><td><span class="badge ok">Included</span></td><td></td></tr>
-              </tbody>
-            </table>
           </div>
         </div>
 
@@ -233,7 +235,7 @@
                   <tr><td>Primary contact</td><td><input value="andrea@wiris.com" style="padding:8px; width:100%"/></td></tr>
                 </tbody>
               </table>
-              <div class="toolbar" style="margin-top:12px"><button class="btn" onclick="alert('Saved!')">Save</button></div>
+              <div class="toolbar" style="margin-top:12px"><button class="btn small" onclick="alert('Saved!')">Save</button></div>
             </div>
             <div class="card">
               <h3>Integrations</h3>
@@ -254,18 +256,26 @@
   </div>
 
   <script>
-    // Main sections
+    // Default to Admin section selected
     const mainSections = ['quizzes','bank','admin'];
+    function setActiveNav(section){
+      document.querySelectorAll('nav .nav-item').forEach(n=>{
+        n.classList.toggle('active', n.dataset.section===section);
+      });
+    }
     function switchMain(e){
       const sec = e.currentTarget.dataset.section;
-      document.querySelectorAll('nav .nav-item').forEach(n=>n.classList.remove('active'));
-      e.currentTarget.classList.add('active');
+      showSection(sec);
+    }
+    function showSection(sec){
       mainSections.forEach(s => document.getElementById('section-'+s).style.display = (s===sec?'block':'none'));
       const map = {quizzes:'My Quizzes', bank:'Content Bank', admin:'Admin'};
       document.getElementById('crumbs').innerText = map[sec];
       document.getElementById('title').innerText = map[sec];
+      setActiveNav(sec);
     }
-    document.querySelector('nav .nav-item[data-section="quizzes"]').classList.add('active');
+    showSection('admin'); // default
+    setActiveNav('admin');
 
     // Admin tabs
     const adminTabs = ['dashboard','members','licenses','analytics','settings'];
@@ -297,10 +307,47 @@
           <td>${m.role}</td>
           <td>${badge(m.status)}</td>
           <td>${m.last}</td>
-          <td><button class="btn" onclick="alert('Edit ${m.name}')">Edit</button></td>
+          <td><button class="btn small" onclick="alert('Edit ${m.name}')">Edit</button></td>
         </tr>`).join('');
     }
     renderMembers();
+
+    // Content bank data for two scopes
+    const bankPublic = [
+      {title:'1.1. Suma matrices SELECTIVIDAD', q:7, pts:7, author:'Administrator Lemur', lang:'ES', date:'Sep 3, 2025'},
+      {title:'1.1. Suma de matrius SELECTIVITAT', q:7, pts:7, author:'Administrator Lemur', lang:'CA', date:'Sep 3, 2025'},
+      {title:'ESO Suma y resta monomios', q:7, pts:7, author:'Maria de LearningLemur', lang:'ES', date:'Sep 3, 2025'},
+      {title:'ESO Resolución problemas con suma y resta fracciones', q:10, pts:10, author:'Maria de LearningLemur', lang:'ES', date:'Sep 3, 2025'},
+      {title:'ESO Suma y resta de fracciones', q:10, pts:10, author:'Maria de LearningLemur', lang:'ES', date:'Sep 3, 2025'},
+      {title:'Operaciones con racionales', q:8, pts:8, author:'Admin Lemur', lang:'ES', date:'Sep 2, 2025'}
+    ];
+    const bankSchool = [
+      {title:'Algebra I Unit 1 – Radicals', q:12, pts:12, author:'Wiris Math Dept', lang:'EN', date:'Sep 7, 2025'},
+      {title:'Polynomials Review', q:10, pts:10, author:'Wiris Math Dept', lang:'EN', date:'Sep 2, 2025'},
+      {title:'Trig Basics', q:9, pts:9, author:'Wiris Math Dept', lang:'EN', date:'Sep 1, 2025'}
+    ];
+    let activeBank = 'public';
+    function selectBank(e){
+      document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      activeBank = e.currentTarget.dataset.bank;
+      renderBank();
+    }
+    function bankRow(item){
+      return `<div class="list-card">
+        <div>
+          <div style="font-weight:800">${item.title}</div>
+          <div class="row-muted">${item.q} questions · ${item.pts} points · Created by ${item.author} · ${item.date}</div>
+        </div>
+        <div class="row-muted">${item.lang}</div>
+        <div><button class="btn small">Preview</button> <button class="btn small">Save</button></div>
+      </div>`;
+    }
+    function renderBank(){
+      const list = activeBank==='public' ? bankPublic : bankSchool;
+      document.getElementById('bank-list').innerHTML = list.map(bankRow).join('');
+    }
+    renderBank();
 
     // Charts
     function line(points, w=480, h=160, color='#0f7c82'){
